@@ -1,0 +1,3 @@
+ scala.slick.codegen.SourceCodeGenerator.main(
+     | Array("com.typesafe.slick.driver.ms.SQLServerDriver", "net.sourceforge.jtds.jdbc.Driver", "jdbc:jtds:sqlserver://localhost/eveonline_crius", "src/main/scala", "evecalc.data", "eve", "database")
+     | )
