@@ -1,17 +1,25 @@
-package evecalc.importer
+package evecalc.util
 
-import evecalc.util.{ItemStore, BlueprintLoader, YAMLToJava}
-import scala.collection.JavaConverters._
+import com.typesafe.slick.driver.ms.SQLServerDriver.simple._
+import evecalc.common.items._
+import evecalc.data.Tables
 
-object EveSDEImporter {
-  def main(args: Array[String]): Unit = {
-    val blueprintMap =
-      Map.empty ++ YAMLToJava.idToPropertiesYAMLToJava("C:\\EveData\\Oceanus_1.0_105658_db\\blueprints.yaml").asScala
-    val blueprints = BlueprintLoader.createBlueprintsFromJavaYAMLMap(blueprintMap)
-    println("Loaded " + blueprints.size + " blueprints")
-    println("Loaded " + ItemStore.loadedItems.size + " other items")
+import scala.collection.mutable
+
+object ItemStore {
+  val loadedItems: mutable.Map[TypeID, Item] = mutable.Map.empty
+
+  def get(typeID: TypeID): Option[Item] = {
+    loadedItems.get(typeID) orElse {
+      val newItem = EveDB.getBasicItem(typeID)
+      newItem foreach { item =>
+        loadedItems += ((typeID, item))
+      }
+      newItem
+    }
   }
 }
+
 
 /*
    Copyright 2014 Kyle Galloway (kyle.s.galloway@gmail.com)
@@ -28,3 +36,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+

@@ -1,16 +1,13 @@
-package evecalc.importer
+package evecalc.common.items
 
-import evecalc.util.{ItemStore, BlueprintLoader, YAMLToJava}
-import scala.collection.JavaConverters._
+case class ItemCategory(categoryID: CategoryID, name: String)
 
-object EveSDEImporter {
-  def main(args: Array[String]): Unit = {
-    val blueprintMap =
-      Map.empty ++ YAMLToJava.idToPropertiesYAMLToJava("C:\\EveData\\Oceanus_1.0_105658_db\\blueprints.yaml").asScala
-    val blueprints = BlueprintLoader.createBlueprintsFromJavaYAMLMap(blueprintMap)
-    println("Loaded " + blueprints.size + " blueprints")
-    println("Loaded " + ItemStore.loadedItems.size + " other items")
-  }
+trait Item {
+  def typeID: TypeID
+
+  def typeName: String
+
+  def category: ItemCategory
 }
 
 /*
@@ -28,3 +25,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+

@@ -1,17 +1,24 @@
-package evecalc.importer
+package evecalc.util;
 
-import evecalc.util.{ItemStore, BlueprintLoader, YAMLToJava}
-import scala.collection.JavaConverters._
+import java.io.FileInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 
-object EveSDEImporter {
-  def main(args: Array[String]): Unit = {
-    val blueprintMap =
-      Map.empty ++ YAMLToJava.idToPropertiesYAMLToJava("C:\\EveData\\Oceanus_1.0_105658_db\\blueprints.yaml").asScala
-    val blueprints = BlueprintLoader.createBlueprintsFromJavaYAMLMap(blueprintMap)
-    println("Loaded " + blueprints.size + " blueprints")
-    println("Loaded " + ItemStore.loadedItems.size + " other items")
-  }
+import org.yaml.snakeyaml.Yaml;
+
+/**
+ * Created by Kyle on 10/12/2014.
+ */
+public class YAMLToJava {
+    public static java.util.Map<Long, Object> idToPropertiesYAMLToJava(String filename) throws FileNotFoundException {
+        Yaml yaml = new Yaml();
+        java.util.Map yamlMap =
+          (java.util.Map<Long, Object>)yaml.load(
+            new FileInputStream(new File(filename)));
+        return yamlMap;
+    }
 }
+
 
 /*
    Copyright 2014 Kyle Galloway (kyle.s.galloway@gmail.com)
@@ -28,3 +35,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
