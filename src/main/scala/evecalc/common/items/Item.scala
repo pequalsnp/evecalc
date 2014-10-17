@@ -8,6 +8,8 @@ trait Item {
   def typeName: String
 
   def category: ItemCategory
+
+  def marketGroupID: Option[Int]
 }
 
 /*

@@ -35,17 +35,19 @@ object EveDB {
       query.run
     }
     result.headOption flatMap { itemInfo =>
-      val (item, group, category) = itemInfo
+      val (item, itemGroup, itemCategory) = itemInfo
       for {
-        categoryID <- group.categoryid
+        categoryID <- itemGroup.categoryid
       } yield {
         new Item {
-          override def typeID: TypeID = item.typeid
+          override val typeID: TypeID = item.typeid
 
-          override def typeName: String = item.typename.getOrElse("")
+          override val typeName: String = item.typename.getOrElse("")
 
-          override def category: ItemCategory =
-            ItemCategory(category.categoryID, category.name)
+          override val category: ItemCategory =
+            ItemCategory(itemCategory.categoryid, itemCategory.categoryname.getOrElse(""))
+
+          override val marketGroupID: Option[Int] = item.marketgroupid
         }
       }
     }

@@ -164,13 +164,16 @@ object BlueprintLoader {
               extractTEPropertiesFromJavaYAMLMap(
                 Map.empty ++ properties.asInstanceOf[java.util.Map[java.lang.String, Object]].asScala)
           }
+          basicItem <- EveDB.getBasicItem(blueprintTypeID)
         } yield {
           new Blueprint {
             override val typeID: TypeID = blueprintTypeID
 
-            override val typeName: String = EveDB.getTypeName(typeID).getOrElse("")
+            override val typeName: String = basicItem.typeName
 
-            override val category: ItemCategory = ItemCategory(9, "Blueprint")
+            override val category: ItemCategory = basicItem.category
+
+            override val marketGroupID: Option[Int] = basicItem.marketGroupID
 
             override val manufacturing: Option[ManufacturingBlueprintActivity] = manufacturingActivity
             override val invention: Option[InventionBlueprintActivity] = inventionActivity
