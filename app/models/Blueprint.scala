@@ -1,4 +1,4 @@
-package evecalc.common.items
+package models
 
 sealed abstract class BlueprintActivityType(val activityId: Int)
 object BlueprintActivityType {

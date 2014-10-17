@@ -1,14 +1,16 @@
-package evecalc.common
+package models
 
-/**
- * Created by Kyle on 10/12/2014.
- */
-package object items {
-  type TypeID = Int
+case class ItemCategory(categoryID: CategoryID, name: String)
 
-  type CategoryID = Int
+trait Item {
+  def typeID: TypeID
+
+  def typeName: String
+
+  def category: ItemCategory
+
+  def marketGroupID: Option[Int]
 }
-
 
 /*
    Copyright 2014 Kyle Galloway (kyle.s.galloway@gmail.com)

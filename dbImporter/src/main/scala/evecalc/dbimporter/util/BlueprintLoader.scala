@@ -1,6 +1,6 @@
-package evecalc.util
+package evecalc.dbimporter.util
 
-import evecalc.common.items._
+import models._
 
 import scala.collection.JavaConverters._
 

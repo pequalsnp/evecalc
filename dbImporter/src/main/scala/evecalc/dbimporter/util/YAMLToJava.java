@@ -1,23 +1,23 @@
-package evecalc.util
+package evecalc.dbimporter.util;
 
-import com.typesafe.slick.driver.ms.SQLServerDriver.simple._
-import evecalc.common.items._
-import evecalc.data.Tables
+import java.io.FileInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 
-import scala.collection.mutable
+import org.yaml.snakeyaml.Yaml;
 
-object ItemStore {
-  val loadedItems: mutable.Map[TypeID, Item] = mutable.Map.empty
-
-  def get(typeID: TypeID): Option[Item] = {
-    loadedItems.get(typeID) orElse {
-      val newItem = EveDB.getBasicItem(typeID)
-      newItem foreach { item =>
-        loadedItems += ((typeID, item))
-      }
-      newItem
+/**
+ * Created by Kyle on 10/12/2014.
+ */
+public class YAMLToJava {
+    public static java.util.Map<Long, Object> idToPropertiesYAMLToJava(String filename) throws FileNotFoundException {
+        Yaml yaml = new Yaml();
+        @SuppressWarnings("unchecked")
+        java.util.Map<Long, Object> yamlMap =
+          (java.util.Map<Long, Object>)yaml.load(
+            new FileInputStream(new File(filename)));
+        return yamlMap;
     }
-  }
 }
 
 

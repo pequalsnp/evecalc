@@ -1,8 +1,8 @@
-package evecalc.util
+package evecalc.dbimporter.util
 
 import com.typesafe.slick.driver.ms.SQLServerDriver.simple._
-import evecalc.common.items._
-import evecalc.data.Tables
+import evecalc.dbimporter.data.evedb.Tables
+import models.{ItemCategory, Item, TypeID}
 
 object EveDB {
   val db = {

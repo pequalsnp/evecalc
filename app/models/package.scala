@@ -1,16 +1,9 @@
-package evecalc.common.items
+package object models {
+  type TypeID = Int
 
-case class ItemCategory(categoryID: CategoryID, name: String)
-
-trait Item {
-  def typeID: TypeID
-
-  def typeName: String
-
-  def category: ItemCategory
-
-  def marketGroupID: Option[Int]
+  type CategoryID = Int
 }
+
 
 /*
    Copyright 2014 Kyle Galloway (kyle.s.galloway@gmail.com)
