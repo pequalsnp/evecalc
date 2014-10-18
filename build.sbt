@@ -1,21 +1,8 @@
 name := """evecalc"""
 
-version := "1.0-SNAPSHOT"
+version := "1.0.0-SNAPSHOT"
 
-lazy val evecalc = (project in file(".")).enablePlugins(PlayScala)
-
-// db schema code generation task
-lazy val slick = TaskKey[Seq[File]]("gen-tables")
-lazy val slickCodeGenTask = (sourceManaged, dependencyClasspath in Compile, runner in Compile, streams) map { (dir, cp, r, s) =>
-  val outputDir = (dir / "slick").getPath
-  val url = "jdbc:h2:mem:test;INIT=runscript from 'data/init.sql'"
-  val jdbcDriver = "org.h2.Driver"
-  val slickDriver = "scala.slick.driver.H2Driver"
-  val pkg = "slick"
-  toError(r.run("scala.slick.codegen.SourceCodeGenerator", cp.files, Array(slickDriver, jdbcDriver, url, outputDir, pkg), s.log))
-  val fname = outputDir + "/slick/Tables.scala"
-  Seq(file(fname))
-}
+lazy val evecalcMain = (project in file(".")).enablePlugins(PlayScala).dependsOn(evecalcCommon)
 
 scalaVersion in ThisBuild := "2.11.1"
 
@@ -25,10 +12,9 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   "com.h2database" % "h2" % "1.4.181",
-  "com.typesafe.slick" %% "slick" % "2.1.0",
-  "com.typesafe.slick" %% "slick-codegen" % "2.1.0"
+  "com.typesafe.slick" %% "slick" % "2.1.0"
 )
 
-sourceGenerators in Compile <+= slickCodeGenTask
+lazy val evecalcCommon = (project in file("common"))
 
-lazy val dbImporter = (project in file("dbImporter")).dependsOn(evecalc)
+lazy val dbImporter = (project in file("dbImporter")).dependsOn(evecalcCommon)

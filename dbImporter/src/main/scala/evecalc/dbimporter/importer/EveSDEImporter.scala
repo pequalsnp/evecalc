@@ -1,7 +1,9 @@
 package evecalc.dbimporter.importer
 
 import evecalc.dbimporter.util._
+import util._
 import models._
+import util.EvecalcDB
 import scala.collection.JavaConverters._
 
 object EveSDEImporter {

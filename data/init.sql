@@ -1,1 +1,1 @@
-CREATE TABLE IF NOT EXISTS items(id int primary key, name varchar(255));
+CREATE TABLE IF NOT EXISTS items(id int primary key, name varchar(255), categoryID int, categoryName varchar(255), marketGroupID int);
