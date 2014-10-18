@@ -6,8 +6,8 @@ lazy val evecalc = (project in file(".")).enablePlugins(PlayScala)
 
 // db schema code generation task
 lazy val slick = TaskKey[Seq[File]]("gen-tables")
-lazy val slickCodeGenTask = (baseDirectory, dependencyClasspath in Compile, runner in Compile, streams) map { (dir, cp, r, s) =>
-  val outputDir = (dir / "app").getPath
+lazy val slickCodeGenTask = (sourceManaged, dependencyClasspath in Compile, runner in Compile, streams) map { (dir, cp, r, s) =>
+  val outputDir = (dir / "slick").getPath
   val url = "jdbc:h2:mem:test;INIT=runscript from 'data/init.sql'"
   val jdbcDriver = "org.h2.Driver"
   val slickDriver = "scala.slick.driver.H2Driver"
@@ -28,8 +28,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % "2.1.0",
   "com.typesafe.slick" %% "slick-codegen" % "2.1.0"
 )
-
-slick <<= slickCodeGenTask
 
 sourceGenerators in Compile <+= slickCodeGenTask
 

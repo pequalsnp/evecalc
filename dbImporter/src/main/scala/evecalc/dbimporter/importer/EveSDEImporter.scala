@@ -1,12 +1,12 @@
 package evecalc.dbimporter.importer
 
 import evecalc.dbimporter.util._
-import models.Item
+import models._
 import scala.collection.JavaConverters._
 
 object EveSDEImporter {
   def main(args: Array[String]): Unit = {
-    val blueprintMap =
+    /*val blueprintMap =
       Map.empty ++ YAMLToJava.idToPropertiesYAMLToJava("C:\\EveData\\Oceanus_1.0_105658_db\\blueprints.yaml").asScala
     val blueprints = BlueprintLoader.createBlueprintsFromJavaYAMLMap(blueprintMap)
     println("Loaded " + blueprints.size + " blueprints")
@@ -22,6 +22,23 @@ object EveSDEImporter {
 
     ItemStore.loadedItems.foreach {
       case (_, item: Item) => EvecalcDB.writeItem(item)
+    }*/
+
+    for {
+      i <- 1 to 100
+      name = "Item" + i.toString
+    } {
+      EvecalcDB.writeItem(
+        new Item {
+          override val typeID: TypeID = i
+
+          override val typeName: String = name
+
+          override val category: ItemCategory = ItemCategory(i % 10, "Category" + i%10)
+
+          override val marketGroupID: Option[Int] = None
+        }
+      )
     }
 
 

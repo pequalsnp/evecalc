@@ -1,0 +1,7 @@
+@(items: List[Item])
+
+<ul>
+    @for(item <- items) {
+    <li>@item.typeName</li>
+    }
+</ul>
